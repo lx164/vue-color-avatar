@@ -1,0 +1,30 @@
+name: A TO A:GH_PAGES
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # 拉取代码
+    - name: Checkout
+      uses: actions/checkout@main
+
+    # 1、生成静态文件
+    - name: Build
+      run: yarn && yarn build
+
+    # 2、部署到 GitHub Pages
+    - name: Push To lx164/vue-color-avatar
+      uses: cpina/github-action-push-to-another-repository@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+      with:
+        # 与上述的FOLDER: dist 一致
+        source-directory: 'dist'
+        # 用户名
+        destination-github-username: 'lx164'
+        # 仓库名
+        destination-repository-name: 'ghp_vue-color-avata'
+        # commit信息
+        commit-message: ${{github.event.head_commit.message}}
+        # push到的分支
+        target-branch: main
