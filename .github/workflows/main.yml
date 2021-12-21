@@ -1,4 +1,4 @@
-name: A TO A:GH_PAGES
+name: BUILD_GH_PAGES
 on: [push]
 jobs:
   build-and-deploy:
@@ -13,18 +13,15 @@ jobs:
       run: yarn && yarn build
 
     # 2、部署到 GitHub Pages
-    - name: Push To lx164/vue-color-avatar
-      uses: cpina/github-action-push-to-another-repository@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
-        # 与上述的FOLDER: dist 一致
-        source-directory: 'dist'
-        # 用户名
-        destination-github-username: 'lx164'
-        # 仓库名
-        destination-repository-name: 'vue-color-avatar'
-        # commit信息
+        token: ${{ secrets.ACCESS_TOKEN }}
+        # 注意这里的folder: dist 是仓库根目录下的 dist，也就是 npm run build 生成静态资源的路径,也有些是 /public
+        folder: dist
+        # 构建结果存储的仓库
+        repository-name: lx164/vue-color-avatar
+        # 构建结果存储的分支
+        branch: ghp_vue-color-avatar
+        # commit文本内容
         commit-message: ${{github.event.head_commit.message}}
-        # push到的分支
-        target-branch: ghp_vue-color-avata
