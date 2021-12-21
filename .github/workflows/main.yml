@@ -23,8 +23,8 @@ jobs:
         # 用户名
         destination-github-username: 'lx164'
         # 仓库名
-        destination-repository-name: 'ghp_vue-color-avata'
+        destination-repository-name: 'vue-color-avatar'
         # commit信息
         commit-message: ${{github.event.head_commit.message}}
         # push到的分支
-        target-branch: main
+        target-branch: ghp_vue-color-avata
